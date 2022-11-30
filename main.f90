@@ -24,6 +24,7 @@ program main
     step = 0
     include'allocate.h'
 
+    write (*, '("Courant Number      ",20e20.10)') u*dt/dx
     call init(ni, phi, phimin, phimax, 32)
 
     include'mkphi.h'

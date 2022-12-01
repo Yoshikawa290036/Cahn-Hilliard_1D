@@ -15,20 +15,22 @@ program main
     integer :: dataou
     character(32) fname
 
-    dataou = 10
-    maxstep = 1000
+    dataou = 1000
+    maxstep = 80000
     ni = 128
     a = 1.0d0
     b = 1.0d0
     kappa = 0.1d0
-    temperature = 0.293
+    temperature = 0.293d0
 
-
-    dx = 1.0d0
-    phimin = 0.265
-    phimax = 0.405
-    xl = dx*dble(ni)
     dt = 2.5e-2
+    dx = 1.0d0
+
+    phimin = 0.265d0
+    phimax = 0.405d0
+
+    xl = dx*dble(ni)
+
     u = 0.5d0
     step = 0
     include'allocate.h'
@@ -43,7 +45,7 @@ program main
         call bundset(ni, phi)
         call calphi(ni, u, dxinv, phi, dt, a, b, temperature, kappa)
 
-        if (mod(step,10) == 0) then
+        if (mod(step,dataou) == 0) then
             include'mkphi.h'
         end if
 

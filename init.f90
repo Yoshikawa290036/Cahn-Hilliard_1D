@@ -3,11 +3,11 @@ subroutine init(ni, phi, phimin, phimax, width)
 
     integer :: ni, width
     double precision :: phimin, phimax
-    double precision :: phi(-2:ni+3)
+    double precision :: phi(-3:ni+4)
 
     integer :: i
 
-    do i = -2, ni+3
+    do i = -3, ni+4
         if (i < ni/2-width/2 .or. i > ni/2+width/2) then
             phi(i) = phimax
         else

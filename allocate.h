@@ -1,1 +1,1 @@
-allocate (phi(-2:ni+3))
+allocate (phi(-3:ni+4))

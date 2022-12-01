@@ -5,16 +5,25 @@ program main
     integer :: i
     double precision :: x
     double precision :: phimin, phimax
-    double precision :: dx
+    double precision :: dx, dxinv
     double precision :: xl
     double precision :: t, dt
+    double precision :: a, b, temperature, kappa
     double precision :: u
     double precision, dimension(:), allocatable :: phi
     integer :: maxstep, step
+    integer :: dataou
     character(32) fname
 
-    maxstep = 10
+    dataou = 10
+    maxstep = 1000
     ni = 128
+    a = 1.0d0
+    b = 1.0d0
+    kappa = 0.1d0
+    temperature = 0.293
+
+
     dx = 1.0d0
     phimin = 0.265
     phimax = 0.405
@@ -23,6 +32,7 @@ program main
     u = 0.5d0
     step = 0
     include'allocate.h'
+    dxinv = 1.0d0/dx
 
     write (*, '("Courant Number      ",20e20.10)') u*dt/dx
     call init(ni, phi, phimin, phimax, 32)
@@ -31,6 +41,11 @@ program main
 
     do step = 1, maxstep
         call bundset(ni, phi)
+        call calphi(ni, u, dxinv, phi, dt, a, b, temperature, kappa)
+
+        if (mod(step,10) == 0) then
+            include'mkphi.h'
+        end if
 
     end do
 

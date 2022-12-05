@@ -31,7 +31,7 @@ program main
 
     xl = dx*dble(ni)
 
-    u = -0.0d0
+    u = 0.5d0
     step = 0
     include'allocate.h'
     dxinv = 1.0d0/dx
@@ -43,7 +43,8 @@ program main
 
     do step = 1, maxstep
         call bundset(ni, phi)
-        call calphi(ni, u, dxinv, phi, dt, a, b, temperature, kappa)
+        ! call calphi(ni, u, dxinv, phi, dt, a, b, temperature, kappa)
+        call calphi2(ni, u, dxinv, phi, dt, a, b, temperature, kappa)
 
         if (mod(step,dataou) == 0) then
             include'mkphi.h'

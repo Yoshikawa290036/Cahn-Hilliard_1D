@@ -5,7 +5,9 @@ FFLAGS=-fbounds-check -fbacktrace -g
 F90SRCS =           \
 bndset.f90 			\
 calphi.f90			\
+calphi2.f90			\
 init.f90			\
+nabla.f90			\
 main.f90            \
 
 SRCS  =  $(F90SRCS)

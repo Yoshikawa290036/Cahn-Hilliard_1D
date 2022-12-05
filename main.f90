@@ -31,7 +31,7 @@ program main
 
     xl = dx*dble(ni)
 
-    u = -0.5d0
+    u = -0.0d0
     step = 0
     include'allocate.h'
     dxinv = 1.0d0/dx

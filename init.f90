@@ -3,7 +3,7 @@ subroutine init(ni, phi, phimin, phimax, width)
 
     integer :: ni, width
     double precision :: phimin, phimax
-    double precision :: phi(-3:ni+4)
+    double precision :: phi(-6:ni+7)
 
     integer :: i
 

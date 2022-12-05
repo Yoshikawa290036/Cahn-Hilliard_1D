@@ -31,12 +31,12 @@ program main
 
     xl = dx*dble(ni)
 
-    u = 0.5d0
+    u = -0.5d0
     step = 0
     include'allocate.h'
     dxinv = 1.0d0/dx
 
-    write (*, '("Courant Number      ",20e20.10)') u*dt/dx
+    write (*, '("Courant Number      ",20e20.10)') abs(u*dt/dx)
     call init(ni, phi, phimin, phimax, 32)
 
     include'mkphi.h'

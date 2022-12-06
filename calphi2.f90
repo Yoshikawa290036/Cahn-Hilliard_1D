@@ -24,30 +24,34 @@ subroutine calphi2(ni, u, dxinv, phi, dt, a, b, temperature, kappa)
 
     ! ddphi = nabla nabla phi
     do i = -4, ni+5
-        m2 = 1.0d0/24.0d0*dxinv**2*phi(i-2)
-        m1 = 1.0d0/24.0d0*dxinv**2*phi(i-1)*16.0d0
-        p0 = 1.0d0/24.0d0*dxinv**2*phi(i  )*30.0d0
-        p1 = 1.0d0/24.0d0*dxinv**2*phi(i+1)*16.0d0
-        p2 = 1.0d0/24.0d0*dxinv**2*phi(i+2)
-        ddphi(i) = -m2 + m1 - p0 + p1 - p2
+        m2 = -1.0d0/24.0d0*dxinv**2*phi(i-2)
+        m1 =  1.0d0/24.0d0*dxinv**2*phi(i-1)*16.0d0
+        p0 = -1.0d0/24.0d0*dxinv**2*phi(i  )*30.0d0
+        p1 =  1.0d0/24.0d0*dxinv**2*phi(i+1)*16.0d0
+        p2 = -1.0d0/24.0d0*dxinv**2*phi(i+2)
+        ddphi(i) = m2 + m1 + p0 + p1 + p2
     end do
 
     do i = -2, ni+3
         zetap = (temperature/((1.0d0-b*phip(i))**2))-2.0d0*a*phip(i)
-        call nabla(dxinv, phi(i-2), phi(i-1), phi(i), phi(i+1), dphip)
-        call nabla(dxinv, ddphi(i-2), ddphi(i-1), ddphi(i), ddphi(i+1), dddphip)
+        call nabla(dxinv, phi(i-1), phi(i), phi(i+1), phi(i+2), dphip)
+        call nabla(dxinv, ddphi(i-1), ddphi(i), ddphi(i+1), ddphi(i+2), dddphip)
 
+        ! Jp(i) = -zetap*dphip + kappa*phip(i)*dddphip
         Jp(i) = -zetap*dphip + kappa*phip(i)*dddphip
+
     end do
 
-    do i = -1, ni+2
-        call nabla(dxinv,phip(i-2), phip(i-1), phip(i), phip(i+1), dphi)
+    do i = 0, ni+2
+        call nabla(dxinv, phip(i-2), phip(i-1), phip(i), phip(i+1), dphi)
         adv(i) = u*dphi
 
         call nabla(dxinv, phip(i-2)*Jp(i-2), phip(i-1)*Jp(i-1), phip(i)*Jp(i),phip(i+1)*Jp(i+1), dchp)
         chp(i) = gamma*dchp
 
         nphi1(i) = phi(i) - dt*(adv(i)+chp(i))
+        ! nphi1(i) = phi(i) - dt*(chp(i))
+
     end do
 
     do i = 0, ni+1

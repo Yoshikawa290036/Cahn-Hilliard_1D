@@ -24,11 +24,11 @@ subroutine calphi2(ni, u, dxinv, phi, dt, a, b, temperature, kappa)
 
     ! ddphi = nabla nabla phi
     do i = -4, ni+5
-        m2 = -1.0d0/24.0d0*dxinv**2*phi(i-2)
-        m1 =  1.0d0/24.0d0*dxinv**2*phi(i-1)*16.0d0
-        p0 = -1.0d0/24.0d0*dxinv**2*phi(i  )*30.0d0
-        p1 =  1.0d0/24.0d0*dxinv**2*phi(i+1)*16.0d0
-        p2 = -1.0d0/24.0d0*dxinv**2*phi(i+2)
+        m2 = -1.0d0/12.0d0*dxinv**2*phi(i-2)
+        m1 =  1.0d0/12.0d0*dxinv**2*phi(i-1)*16.0d0
+        p0 = -1.0d0/12.0d0*dxinv**2*phi(i  )*30.0d0
+        p1 =  1.0d0/12.0d0*dxinv**2*phi(i+1)*16.0d0
+        p2 = -1.0d0/12.0d0*dxinv**2*phi(i+2)
         ddphi(i) = m2 + m1 + p0 + p1 + p2
     end do
 
